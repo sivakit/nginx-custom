@@ -4,12 +4,15 @@
 # based on the original stable alpine image
 # https://github.com/nginxinc/docker-nginx/blob/014e624239987a0a46bee5b44088a8c5150bf0bb/stable/alpine/Dockerfile
 
-FROM alpine:3.19
+FROM alpine:3.14
 
 ENV NGINX_VERSION 1.20.2
 ENV NGINX_STICKY_MODULE_NG_VERSION 08a395c66e42
 ENV NGINX_UPSTREAM_DYNAMIC_SERVERS_VERSION master
 ENV LUA_NGINX_MODULE_VERSION 0.10.18
+ENV SIGSCI_ACCESSKEYID="SIGSCI_ACCESSKEYID"
+ENV SIGSCI_SECRETACCESSKEY="SIGSCI_ACCESSKEYID"
+
 # Install LUAJIT and LUARestyCore
 RUN apk update && apk add --no-cache luajit lua-resty-core
 
@@ -79,7 +82,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
         luajit-dev \
         && export LUAJIT_LIB=/usr/lib \
         && export LUAJIT_INC=/usr/include/luajit-2.1 \
-        && curl -fSL wget https://github.com/apache/incubator-pagespeed-ngx/archive/v1.13.35.2-stable.tar.gz \
+        && curl -fSL https://github.com/apache/incubator-pagespeed-ngx/archive/v1.13.35.2-stable.tar.gz -o v1.13.35.2-stable.tar.gz \
         && tar -xzvf v1.13.35.2-stable.tar.gz \
         && cd incubator-pagespeed-ngx-1.13.35.2-stable \
         && psol_url=https://dl.google.com/dl/page-speed/psol/1.13.35.2-x64.tar.gz \
